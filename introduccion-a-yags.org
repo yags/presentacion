@@ -7,11 +7,16 @@
 #+startup: beamer
 #+language: es
 
-#+latex_header: \usepackage{arev}
-
 #+latex_class_options: [spanish,presentation]
 #+latex_header: \usepackage[spanish,mexico,es-noshorthands]{babel}
 #+beamer_header: \languagepath{spanish}
+
+#+latex_header: \lstdefinelanguage{gap}{%
+#+latex_header:   morekeywords={true, while, do, and, od},
+#+latex_header:   sensitive=true,
+#+latex_header:   morestring=[b]",
+#+latex_header:   morecomment=[l]{\#},
+#+latex_header: }
 
 #+beamer_header: \beamerdefaultoverlayspecification{<+->}
 #+beamer_header: \setbeamertemplate{items}[circle]
@@ -59,7 +64,29 @@ file:gap.png
 #+attr_latex: :width 11cm
 [[file:gapgithub.png]]
 
+* Ejemplo
 
+** 
+
+   #+BEGIN_SRC gap :exports code
+# Encontrar el primer grupo no soluble
+
+solvable := true;
+i := 0;
+
+while solvable do
+    i := i+1;
+    j := 0;
+    while solvable and j < NrSmallGroups(i) do
+        j := j+1;
+        g := SmallGroup(i,j);
+        Print("Checking SmallGroup(",i,",",j,")\n");
+        solvable := IsSolvable(g);
+    od;
+od;
+
+Print("First non solvable group is SmallGroup(",i,",",j,")\n");
+   #+END_SRC
 
 * Yags
 
@@ -72,10 +99,15 @@ Es necesario cambiar ~org-beamer-verbatim-elements~, si no, al ver
 contenido verbatim se añade la opción ~fragile~ a los frames, y entonces
 no se va descubriendo un item a la vez en las listas.
 
+Sin embargo, el paquete listings /necesita/ la opción ~fragile~, si no,
+causa errores. Por eso aquí la variable local añade tal opción solo a
+los bloques con código fuente.
+
 # Local Variables:
 # eval: (set-input-method "spanish-prefix")  
+# eval: (add-to-list 'org-latex-packages-alist '("" "listings"))
 # org-confirm-babel-evaluate: nil
 # org-beamer-outline-frame-title: "Contenido"
-# org-beamer-verbatim-elements: nil
+# org-beamer-verbatim-elements: (src-block)
 # org-latex-image-default-width: "3cm"
 # End:
