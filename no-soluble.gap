@@ -1,3 +1,5 @@
+# Encontrar el primer grupo no soluble
+
 solvable := true;
 i := 0;
 
