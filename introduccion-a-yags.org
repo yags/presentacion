@@ -1,0 +1,81 @@
+#+title: Yags, un programa para teoría de gráficas
+#+author: Rafael Villarroel Flores, UAEH
+#+date: 1 de octubre de 2015
+#+options: H:2
+
+#+latex_class: beamer-talk
+#+startup: beamer
+#+language: es
+
+#+latex_header: \usepackage{arev}
+
+#+latex_class_options: [spanish,presentation]
+#+latex_header: \usepackage[spanish,mexico,es-noshorthands]{babel}
+#+beamer_header: \languagepath{spanish}
+
+#+beamer_header: \beamerdefaultoverlayspecification{<+->}
+#+beamer_header: \setbeamertemplate{items}[circle]
+
+* Introducción
+
+** Cómputo en investigación 
+
+   - En la investigación en combinatoria, y en particular en teoría de
+     gráficas, la computadora nos ayuda a checar hipótesis y plantear
+     conjeturas.
+   - En la plática se pretende presentar el programa =yags= (Yet Another
+     Graph System), el cual es un paquete basado en el programa =GAP=
+     (Groups, Algorithms, Programming).
+
+* GAP
+
+** El programa =GAP=
+   
+*** 
+
+#+caption:
+#+attr_latex: :width 3cm
+file:gap.png
+
+   - ~GAP~ quiere decir /Groups, Algorithms and Programming/.
+   - ~GAP~ se inició en RWTH-Aachen, bajo la dirección de Joachim
+     Neubüser en 1985.
+
+** Componentes de ~GAP~
+
+   ~GAP~ se compone de:
+
+   - Un *núcleo*, escrito en ~C~, que proporciona un intérprete para el
+     lenguaje ~GAP~, y funciones y estructuras básicas.
+   - Una *librería de funciones*, escritas en el lenguaje ~GAP~.
+   - Una *librería de datos algebraicos*, como la librería de grupos pequeños.
+   - Diversos *manuales*.
+
+** Código de acceso libre
+
+   El desarrollo de ~GAP~ se lleva a cabo en [[https://github.com/gap-system/gap]]
+
+#+caption:
+#+attr_latex: :width 11cm
+[[file:gapgithub.png]]
+
+
+
+* Yags
+
+** El programa =yags=
+
+
+* COMMENT Local Variables
+
+Es necesario cambiar ~org-beamer-verbatim-elements~, si no, al ver
+contenido verbatim se añade la opción ~fragile~ a los frames, y entonces
+no se va descubriendo un item a la vez en las listas.
+
+# Local Variables:
+# eval: (set-input-method "spanish-prefix")  
+# org-confirm-babel-evaluate: nil
+# org-beamer-outline-frame-title: "Contenido"
+# org-beamer-verbatim-elements: nil
+# org-latex-image-default-width: "3cm"
+# End:
