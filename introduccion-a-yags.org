@@ -12,11 +12,14 @@
 #+beamer_header: \languagepath{spanish}
 
 #+latex_header: \lstdefinelanguage{gap}{%
-#+latex_header:   morekeywords={gap>, while, do, and, od},
+#+latex_header:   morekeywords={gap>, return, local, not, true, fail, then, if, while, do, and, od, else, fi, end, function},
 #+latex_header:   sensitive=true,
 #+latex_header:   morestring=[b]",
 #+latex_header:   morecomment=[l]{\#},
 #+latex_header: }
+#+latex_header: \lstdefinelanguage{dot}{}
+
+#+latex_header: \usepackage{tkz-berge}
 
 #+beamer_header: \beamerdefaultoverlayspecification{<+->}
 #+beamer_header: \setbeamertemplate{items}[circle]
@@ -26,7 +29,7 @@
 ** Cómputo en investigación 
 
    - En la investigación en combinatoria, y en particular en teoría de
-     gráficas, la computadora nos ayuda a checar hipótesis y plantear
+     gráficas, la computadora nos ayuda a verificar hipótesis y plantear
      conjeturas.
    - En la plática se pretende presentar el programa =yags= (Yet Another
      Graph System), el cual es un paquete basado en el programa =GAP=
@@ -117,7 +120,7 @@ Print("First non solvable group is SmallGroup(",i,",",j,")\n");
 
 ** Paquetes de =GAP=
 
-   - =GAP= es /extendible/, lo cual significa que es relativamente sencillo
+   - =GAP= es /extensible/, lo cual significa que es relativamente sencillo
      añadirle nuevas funciones y capacidades, por medio de *paquetes*.
    - Muchos paquetes ya vienen con =GAP=.
    - Es posible enviar paquetes a los autores de =GAP=, los cuales pasan
@@ -136,9 +139,8 @@ Print("First non solvable group is SmallGroup(",i,",",j,")\n");
    - cohomolo :: Cohomology groups of finite groups on finite modules
    - Crime :: A GAP Package to Calculate Group Cohomology and Massey Products
    - CRISP :: Computing with Radicals, Injectors, Schunck classes and Projectors
-   - Cryst :: Computing with crystallographic groups
 
-** Algunos paquetes que vienen con =GAP=
+** COMMENT Algunos paquetes que vienen con =GAP=
 
    - Cubefree :: Constructing the Groups of a Given Cubefree Order
    - EDIM :: Elementary Divisors of Integer Matrices
@@ -170,26 +172,38 @@ Print("First non solvable group is SmallGroup(",i,",",j,")\n");
    #+BEGIN_SRC gap :exports code
 gap> LoadPackage("grape");
 true
-gap> P := Graph( SymmetricGroup(5), [[1,2]], OnSets,
->
-function(x,y) return Intersection(x,y)=[]; end );
-rec( isGraph := true, order := 10,
-group := Group([ ( 1, 2, 3, 5, 7)( 4, 6, 8, 9,10), ( 2, 4)( 6, 9)( 7,10) ]),
-schreierVector := [ -1, 1, 1, 2, 1, 1, 1, 1, 2, 2 ],
-adjacencies := [ [ 3, 5, 8 ] ], representatives := [ 1 ],
-names := [ [ 1, 2 ], [ 2, 3 ], [ 3, 4 ], [ 1, 3 ], [ 4, 5 ], [ 2, 4 ],
-[ 1, 5 ], [ 3, 5 ], [ 1, 4 ], [ 2, 5 ] ] )
+gap> P:=Graph(SymmetricGroup(5),[[1,2]],OnSets,function(x,y) return Intersection(x,y)=[]; end);
+rec( adjacencies := [ [ 3, 5, 8 ] ], group := Group([ (1,2,3,5,7)(4,6,8,9,10), (2,4)(6,9)(7,10) ]), 
+  isGraph := true, names := [ [ 1, 2 ], [ 2, 3 ], [ 3, 4 ], [ 1, 3 ], [ 4, 5 ], [ 2, 4 ], [ 1, 5 ], 
+      [ 3, 5 ], [ 1, 4 ], [ 2, 5 ] ], order := 10, representatives := [ 1 ], 
+  schreierVector := [ -1, 1, 1, 2, 1, 1, 1, 1, 2, 2 ] )
 gap> Diameter(P);
 2
 gap> Girth(P);
 5
    #+END_SRC
 
-** Un dibujo de la gráfica usando Graphviz
+** Algunas características de =GRAPE=
 
+   - Si un grupo \(\Gamma\) actúa en la gráfica \(G\), =GRAPE= utiliza
+     tal información para optimizar cálculos en la gráfica.
+   - Por ejemplo, la gráfica completa con 6 vértices se da como
+     =CompleteGraph(SymmetricGroup(6))=. 
+   - =GRAPE= no incluye una herramienta para dibujar gráficas.
+
+** Un dibujo de la gráfica usando Graphviz   
+
+   Graphviz es un programa que sirve para dibujar gráficas ([[http://www.graphviz.org/]])
+
+*** Código 							   :B_column:
+    :PROPERTIES:
+    :BEAMER_env: column
+    :beamer_col: 0.4
+    :END:
+
+   #+name: graphviz
    #+BEGIN_SRC dot :cmd dot :cmdline -Tpng :file petersen.png :exports both :cache yes
 graph G {
-node [overlap=scale,splines=true];
 "[ 3, 4 ]" -- "[ 1, 2 ]";
 "[ 4, 5 ]" -- "[ 1, 2 ]";
 "[ 4, 5 ]" -- "[ 2, 3 ]";
@@ -208,15 +222,245 @@ node [overlap=scale,splines=true];
 }
    #+END_SRC
 
-   #+RESULTS[aa22d381e6d13f89992c16f52fee5ecb4f228654]:
+*** Dibujo							   :B_column:
+    :PROPERTIES:
+    :BEAMER_env: column
+    :beamer_col: 0.58
+    :END:
+
+   #+attr_html: :width 400 :alt Petersen :align center
+   #+attr_latex: :float t :width 6cm
+   #+RESULTS[ae884ff742d5c84ffc1841a7f1db9efb630098a6]: graphviz
    [[file:petersen.png]]
+
+** La gráfica de Petersen
+
+   Un mejor dibujo de la gráfica anterior:
+
+    #+name: petersen-berge
+    #+header: :imagemagick yes :iminoptions -density 300 -resize 400
+    #+header: :packages '(("" "tikz") ("" "tkz-berge")) :border 1pt
+    #+header: :file (by-backend (latex "petersen-berge.tikz") (beamer "petersen-berge.tikz") (t "petersen-berge.png"))
+    #+header: :cache yes
+    #+begin_src latex :results raw file
+\begin{tikzpicture}[scale=1.2]
+  \SetUpVertex[InnerSep=0pt,MinSize=0pt]
+  \SetUpEdge[lw=1.5pt]
+  \grEmptyCycle*[rotation=90,prefix=a,RA=2,Math]{12,34,15,23,45}
+  \grEmptyCycle*[rotation=90,prefix=b,RA=1,Math]{35,25,24,14,13}
+  \EdgeInGraphLoop{a}{5}
+  \EdgeInGraphMod{b}{5}{2}
+  \EdgeIdentity{a}{b}{5}
+  \draw (0,-2) node [fill=orange!80!white,below]{Gráfica de Petersen};
+\end{tikzpicture}
+    #+end_src
+    
+    #+attr_html: :width 400 :alt petersen-berge :align center
+    #+attr_latex: :float t :width ""
+    #+RESULTS[c1dcfe255d8d4c9c0d1787b79a7694e2426be023]: petersen-berge
+    [[file:petersen-berge.png]]
 
 * Yags
 
 ** El programa =yags=
 
+   - =Yags= es un paquete para =GAP= creado por M.\nbsp{}Pizaña y
+     R.\nbsp{}MacKinney en 2003 en la UAM-Iztapalapa.
+   - De momento es incompatible con =GRAPE=.
+   - =Yags= define varias familias de gráficas y permite calcular
+     parámetros sobre gráficas, sin referencia a un grupo actuando en
+     la gráfica.
+
+** Primer sesión con =yags=
+
+   #+BEGIN_SRC gap :exports code
+gap> g:=RandomGraph(20,1/5);
+Graph( Category := SimpleGraphs, Order := 20, Size := 
+42, Adjacencies := [ [ 4, 5, 9, 20 ], [ 3, 9, 11, 12, 15, 19 ], 
+  [ 2, 17 ], [ 1, 5, 16 ], [ 1, 4, 6, 11, 16 ], [ 5, 7, 16, 18 ], 
+  [ 6, 8, 10, 11, 14, 15, 16 ], [ 7, 10, 14 ], 
+  [ 1, 2, 12, 14, 20 ], [ 7, 8, 13, 16 ], [ 2, 5, 7, 13, 16, 20 ], 
+  [ 2, 9, 13, 18, 19 ], [ 10, 11, 12, 15 ], [ 7, 8, 9 ], 
+  [ 2, 7, 13, 16, 19 ], [ 4, 5, 6, 7, 10, 11, 15 ], [ 3, 19 ], 
+  [ 6, 12 ], [ 2, 12, 15, 17 ], [ 1, 9, 11 ] ] )
+gap> Diameter(g);
+4
+   #+END_SRC
+
+** Dibujos con =yags=
+
+*** 
+
+   #+BEGIN_SRC gap :exports code
+gap> g:=WheelGraph(7);
+Graph( Category := SimpleGraphs, Order := 8, Size := 14, Adjacencies := 
+[ [ 2, 3, 4, 5, 6, 7, 8 ], [ 1, 3, 8 ], [ 1, 2, 4 ], [ 1, 3, 5 ], [ 1, 4, 6 ], 
+  [ 1, 5, 7 ], [ 1, 6, 8 ], [ 1, 2, 7 ] ] )
+gap> Draw(g);
+   #+END_SRC
+
+*** 
+
+   #+BEGIN_SRC gap :exports code
+gap> g:=WheelGraph(15,4);;
+gap> Draw(g);
+   #+END_SRC
+
+** Problema de Leo
+
+   - En una plática en la UAEH en mayo de este año, Leonardo Martínez
+     planteó la siguiente pregunta:
+   - ¿Cuál es el máximo de aristas que una gráfica de 8 vértices puede
+     tener, entre las gráficas con número de clan a lo más 3 y número de
+     independencia a lo más 2?
+   - (El *número de clan* de una gráfica \(G\) es el mayor \(n\) tal
+     que \(K_{n}\) es subgráfica de \(G\). Se denota con \(\omega(G)\)).
+   - (El *número de independencia* de \(G\) es \(\omega(\overline{G})\)).
+   - Como el /número de Ramsey/ \(R(4,3)=9\), toda gráfica con 9
+     vértices tiene \(\omega(G)\geq 4\) o \(\omega(\overline{G})\geq
+     3\).
+   - Por lo tanto, es interesante considerar las gráficas de 8
+     vértices con \(\omega(G)\leq 3\) y \(\omega(\overline{G})\leq 2\).
+   - Por el /teorema de Turán/, tales gráficas tienen entre 12 y 21
+     aristas.
+
+** Solución
+
+   - Definimos una función para checar la condición deseada, y la
+     guardamos en el archivo =leo.gap=.
+     #+BEGIN_SRC gap :exports code
+CondicionLeo := function (g)
+    return CliqueNumber(g)<=3 and
+           CliqueNumber(ComplementGraph(g))<=2;
+end;
+     #+END_SRC
+
+** Solución (continuación)
+
+   - En una sesión interactiva con =yags=, obtenemos:
+     #+BEGIN_SRC gap :exports code
+gap> Read("leo.gap");
+gap> g8:=ConnectedGraphsOfGivenOrder(8);;
+gap> f:=Filtered(g8,CondicionLeo);;
+gap> List(f,x->Size(x));
+[ 16, 17, 18 ]
+     #+END_SRC
+   - Por lo que la respuesta a la pregunta de Leo es 18.
+
+** Operador de clanes
+
+   - En mi investigación me interesa el /operador de clanes/. Dada una
+     gráfica \(G\), su *gráfica de clanes* \(K(G)\) es la gráfica de
+     intersección de los clanes de \(G\).
+   - (Un *clan* de \(G\) es una subgráfica completa maximal).
+   - Definimos \(K^{n}(G)\) como \(K(K^{n-1}(G))\) si \(n\geq2\),
+     \(K^{1}(G)=K(G)\).
+   - Hay algunas gráficas para las que la sucesión de órdenes de las
+     gráficas \(\{|K^{n}(G)|\}\) tiende a infinito. Tales gráficas se
+     llaman *divergentes*, las otras se llaman *convergentes*.
+   - No se conoce un algoritmo general para determinar el
+     *comportamiento* de una gráfica.
+   - Usaremos las listas de gráficas para encontrar las que sean
+     divergentes más pequeñas.
+
+** Operador de clanes (continuación)
+
+   - Hay una condición (/propiedad de Helly/) que es fácilmente
+     verificable y que implica convergencia. Para que una gráfica no
+     tenga la propiedad de Helly necesita tener al menos 6 vértices.
+   - Si \(G\) tiene un /vértice dominado/ \(v\), entonces \(G\) y
+     \(G-v\) tienen el mismo comportamiento.
+   - Por lo tanto, si \(G\) tiene 6 vértices y uno de ellos es
+     dominado, entonces \(G\) es convergente.
+   - Puede ser que \(G\) no sea Helly, pero para alguna \(n\) se tenga
+     que \(K^{n}(G)\) sea Helly. Por supuesto que en ese caso \(G\) es
+     convergente. 
+
+** Código de clanes
+
+   #+BEGIN_SRC gap :exports code
+HasNoDominatedVertex := function (g)
+    return IsEmpty(DominatedVertices(g));
+end;
+
+IsNotCliqueHelly := function (g)
+    return not(IsCliqueHelly(g));
+end;
+
+IsNotEventuallyHelly := function (g)
+    local kcurrent, isit;
+    kcurrent := g;
+    isit := not(IsCliqueHelly(kcurrent));
+    while isit do
+        kcurrent := CliqueGraph(kcurrent,100);
+        if kcurrent = fail then 
+            return true;
+        else
+            kcurrent := CompletelyParedGraph(kcurrent);
+            isit := not(IsCliqueHelly(kcurrent));
+        fi;
+    od;
+    return isit;
+end;
+   #+END_SRC
+
+** Sesión interactiva. Gráficas de 6 vértices
+
+   #+BEGIN_SRC gap :exports code
+gap> graphs:=ConnectedGraphsOfGivenOrder(6);;
+gap> Length(graphs);
+112
+gap> graphs:=Filtered(graphs,HasNoDominatedVertex);;
+gap> Length(graphs);
+9
+gap> graphs:=Filtered(graphs,IsCliqueHelly);;
+gap> Length(graphs);
+8
+gap> graphs:=Filtered(graphs,IsNotCliqueHelly);;
+gap> Length(graphs);
+1
+gap> Draw(graphs[1]);
+   #+END_SRC
+
+   La única gráfica de 6 vértices que obtenemos es la gráfica del
+   octaedro, y es de hecho divergente (Neumann-Lara, 1975).
+
+** Gráficas de 7 vértices
+
+   #+BEGIN_SRC gap :exports code
+gap> graphs:=ConnectedGraphsOfGivenOrder(7);;
+gap> Length(graphs);
+853
+gap> graphs:=Filtered(graphs,HasNoDominatedVertex);;
+gap> Length(graphs);
+46
+gap> graphs:=Filtered(graphs,IsNotCliqueHelly);;
+gap> Length(graphs);
+6
+gap> graphs:=Filtered(graphs,IsNotEventuallyHelly);;
+gap> Length(graphs);
+3
+   #+END_SRC
+
+   Las dos primeras gráficas tiene una /retracción/ al octaedro, 
+   la tercera es la /suspensión/ del ciclo \(C_{5}\). Las tres son
+   divergentes por teoremas de Neumann-Lara.
+
+** Página de yags
+
+   Yags se puede obtener de la página:
+
+   #+BEGIN_CENTER
+   [[https://github.com/yags/main]]
+   #+END_CENTER
 
 
+* COMMENT Comentarios a yags
+
+  - Quería definir una función =HasDominatedVertices=, pero no pude
+    porque =DominatedVertices= ya está definido, y
+    =HasDominatedVertices= en un /tester/ si la función
+    =DominatedVertices= ha sido ya aplicada en una gráfica =g=.
 
 * COMMENT Local Variables
 
@@ -231,6 +475,7 @@ los bloques con código fuente.
 # Local Variables:
 # eval: (set-input-method "spanish-prefix")  
 # eval: (add-to-list 'org-latex-packages-alist '("" "listings"))
+# eval: (load-library "ob-dot")
 # org-confirm-babel-evaluate: nil
 # org-beamer-outline-frame-title: "Contenido"
 # org-beamer-verbatim-elements: (src-block)
