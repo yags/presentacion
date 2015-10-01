@@ -45,7 +45,6 @@
 #+attr_latex: :width 3cm
 file:gap.png
 
-   - =GAP= quiere decir /Groups, Algorithms and Programming/.
    - =GAP= se inició en RWTH-Aachen, bajo la dirección de Joachim
      Neubüser en 1985.
    - La página de GAP es [[http://gap-system.org/]].
@@ -345,7 +344,7 @@ gap> f:=Filtered(g8,CondicionLeo);;
 gap> List(f,x->Size(x));
 [ 16, 17, 18 ]
      #+END_SRC
-   - Por lo que la respuesta a la pregunta de Leo es 18.
+   - Por lo que la respuesta a la pregunta de Leonardo es 18.
 
 ** Operador de clanes
 
@@ -448,12 +447,11 @@ gap> Length(graphs);
 
 ** Página de yags
 
-   Yags se puede obtener de la página:
+   =Yags= se puede obtener de la página:
 
    #+BEGIN_CENTER
-   [[https://github.com/yags/main]]
+   [[https://github.com/yags/]]
    #+END_CENTER
-
 
 * COMMENT Comentarios a yags
 
