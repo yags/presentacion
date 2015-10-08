@@ -1,4 +1,4 @@
-#+title: Yags, un programa para teoría de gráficas
+#+title: YAGS, un programa para teoría de gráficas
 #+author: Rafael Villarroel Flores, UAEH
 #+date: 1 de octubre de 2015
 #+options: H:2
@@ -31,7 +31,7 @@
    - En la investigación en combinatoria, y en particular en teoría de
      gráficas, la computadora nos ayuda a verificar hipótesis y plantear
      conjeturas.
-   - En la plática se pretende presentar el programa =yags= (Yet Another
+   - En la plática se pretende presentar el programa =YAGS= (Yet Another
      Graph System), el cual es un paquete basado en el programa =GAP=
      (Groups, Algorithms, Programming).
 
@@ -55,8 +55,8 @@ file:gap.png
 
    - Un *núcleo*, escrito en =C=, que proporciona un intérprete para el
      lenguaje =GAP=, y funciones y estructuras básicas.
-   - Una *librería de funciones*, escritas en el lenguaje =GAP=.
-   - Una *librería de datos algebraicos*, como la librería de grupos pequeños.
+   - Una *biblioteca de funciones*, escritas en el lenguaje =GAP=.
+   - Una *biblioteca de datos algebraicos*, como la librería de grupos pequeños.
    - *Manuales* (tutorial y referencia).
 
 ** Código de acceso libre
@@ -259,18 +259,18 @@ graph G {
     #+RESULTS[c1dcfe255d8d4c9c0d1787b79a7694e2426be023]: petersen-berge
     [[file:petersen-berge.png]]
 
-* Yags
+* YAGS
 
-** El programa =yags=
+** El programa =YAGS=
 
-   - =Yags= es un paquete para =GAP= creado por M.\nbsp{}Pizaña y
-     R.\nbsp{}MacKinney en 2003 en la UAM-Iztapalapa.
+   - =YAGS= es un paquete para =GAP= creado por M.\nbsp{}Pizaña en
+     2003 en la UAM-Iztapalapa.
    - De momento es incompatible con =GRAPE=.
-   - =Yags= define varias familias de gráficas y permite calcular
+   - =YAGS= define varias familias de gráficas y permite calcular
      parámetros sobre gráficas, sin referencia a un grupo actuando en
      la gráfica.
 
-** Primer sesión con =yags=
+** Primer sesión con =YAGS=
 
    #+BEGIN_SRC gap :exports code
 gap> g:=RandomGraph(20,1/5);
@@ -286,7 +286,7 @@ gap> Diameter(g);
 4
    #+END_SRC
 
-** Dibujos con =yags=
+** Dibujos con =YAGS=
 
 *** 
 
@@ -336,7 +336,7 @@ end;
 
 ** Solución (continuación)
 
-   - En una sesión interactiva con =yags=, obtenemos:
+   - En una sesión interactiva con =YAGS=, obtenemos:
      #+BEGIN_SRC gap :exports code
 gap> Read("leo.gap");
 gap> g8:=ConnectedGraphsOfGivenOrder(8);;
@@ -445,15 +445,15 @@ gap> Length(graphs);
    la tercera es la /suspensión/ del ciclo \(C_{5}\). Las tres son
    divergentes por teoremas de Neumann-Lara.
 
-** Página de yags
+** Página de YAGS
 
-   =Yags= se puede obtener de la página:
+   =YAGS= se puede obtener de la página:
 
    #+BEGIN_CENTER
    [[https://github.com/yags/]]
    #+END_CENTER
 
-* COMMENT Comentarios a yags
+* COMMENT Comentarios a YAGS
 
   - Quería definir una función =HasDominatedVertices=, pero no pude
     porque =DominatedVertices= ya está definido, y
