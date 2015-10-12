@@ -164,6 +164,7 @@ Print("First non solvable group is SmallGroup(",i,",",j,")\n");
    - Simplicial Homology :: [[http://www.eecis.udel.edu/~dumas/Homology/Homology]]
    - Digraphs :: [[http://www-groups.mcs.st-andrews.ac.uk/~jamesm/digraphs.php]]
    - FinIng :: Finite Incidence Geometry [[http://cage.ugent.be/fining/]]
+   - SgpViz :: Semigroup visualization [[http://cmup.fc.up.pt/cmup/mdelgado/sgpviz/]]
    - YAGS :: Yet Another Graph System	
 
 ** Gráficas en GRAPE
