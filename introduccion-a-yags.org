@@ -51,7 +51,7 @@ file:gap.png
    - La página de GAP es [[http://gap-system.org/]].
 
 ** Componentes de =GAP=
-
+   #+beamer: \pause
    =GAP= se compone de:
 
    - Un *núcleo*, escrito en =C=, que proporciona un intérprete para el
@@ -89,25 +89,11 @@ gap> (1,2,3)*(1,2);
 
 ** Ejemplo de código
 
-   #+BEGIN_SRC gap :exports code
-# Encontrar el primer grupo no soluble
-
-solvable := true;
-i := 0;
-
-while solvable do
-    i := i+1;
-    j := 0;
-    while solvable and j < NrSmallGroups(i) do
-        j := j+1;
-        g := SmallGroup(i,j);
-        Print("Checking SmallGroup(",i,",",j,")\n");
-        solvable := IsSolvable(g);
-    od;
-od;
-
-Print("First non solvable group is SmallGroup(",i,",",j,")\n");
-   #+END_SRC
+   #+INCLUDE: "./no-soluble.gap" src gap :lines "1-2"
+   #+beamer: \pause
+   #+INCLUDE: "./no-soluble.gap" src gap :lines "3-13"
+   #+beamer: \pause
+   #+INCLUDE: "./no-soluble.gap" src gap :lines "14-24"
 
 * Paquetes
 
@@ -165,14 +151,29 @@ Print("First non solvable group is SmallGroup(",i,",",j,")\n");
 
    #+BEGIN_SRC gap :exports code
 gap> LoadPackage("grape");
+Loading  GRAPE 4.6.1 (GRaph Algorithms using PErmutation groups)
+by Leonard H. Soicher (http://www.maths.qmul.ac.uk/~leonard/).
+Homepage: http://www.maths.qmul.ac.uk/~leonard/grape/
 true
+   #+END_SRC
+   #+beamer: \pause\vspace*{-0.2cm}
+   #+BEGIN_SRC gap :exports code
 gap> P:=Graph(SymmetricGroup(5),[[1,2]],OnSets,function(x,y) return Intersection(x,y)=[]; end);
+   #+END_SRC
+   #+beamer: \pause\vspace*{-0.45cm}
+   #+BEGIN_SRC gap :exports code
 rec( adjacencies := [ [ 3, 5, 8 ] ], group := Group([ (1,2,3,5,7)(4,6,8,9,10), (2,4)(6,9)(7,10) ]), 
   isGraph := true, names := [ [ 1, 2 ], [ 2, 3 ], [ 3, 4 ], [ 1, 3 ], [ 4, 5 ], [ 2, 4 ], [ 1, 5 ], 
       [ 3, 5 ], [ 1, 4 ], [ 2, 5 ] ], order := 10, representatives := [ 1 ], 
   schreierVector := [ -1, 1, 1, 2, 1, 1, 1, 1, 2, 2 ] )
+   #+END_SRC
+   #+beamer: \pause\vspace*{-0.2cm}
+   #+BEGIN_SRC gap :exports code
 gap> Diameter(P);
 2
+   #+END_SRC
+   #+beamer: \pause\vspace*{-0.2cm}
+   #+BEGIN_SRC gap :exports code
 gap> Girth(P);
 5
    #+END_SRC
@@ -215,7 +216,7 @@ graph G {
 "[ 2, 5 ]" -- "[ 1, 4 ]";
 }
    #+END_SRC
-
+#+beamer: \pause
 *** Dibujo							   :B_column:
     :PROPERTIES:
     :BEAMER_env: column
@@ -268,17 +269,31 @@ graph G {
 ** Primer sesión con =YAGS=
 
    #+BEGIN_SRC gap :exports code
+gap> LoadPackage("yags");
+Loading  YAGS 0.0.1  (Yet Another Graph System),
+by  R. MacKinney, M.A. Pizana and R. Villarroel-Flores
+rene@xamanek.izt.uam.mx, map@xamanek.izt.uam.mx, rvf0068@gmail.com
+true
+   #+END_SRC
+   #+beamer: \pause\vspace*{-0.2cm}
+   #+BEGIN_SRC gap :exports code
 gap> g:=RandomGraph(20,1/5);
-Graph( Category := SimpleGraphs, Order := 20, Size := 
-42, Adjacencies := [ [ 4, 5, 9, 20 ], [ 3, 9, 11, 12, 15, 19 ], 
-  [ 2, 17 ], [ 1, 5, 16 ], [ 1, 4, 6, 11, 16 ], [ 5, 7, 16, 18 ], 
-  [ 6, 8, 10, 11, 14, 15, 16 ], [ 7, 10, 14 ], 
-  [ 1, 2, 12, 14, 20 ], [ 7, 8, 13, 16 ], [ 2, 5, 7, 13, 16, 20 ], 
-  [ 2, 9, 13, 18, 19 ], [ 10, 11, 12, 15 ], [ 7, 8, 9 ], 
-  [ 2, 7, 13, 16, 19 ], [ 4, 5, 6, 7, 10, 11, 15 ], [ 3, 19 ], 
-  [ 6, 12 ], [ 2, 12, 15, 17 ], [ 1, 9, 11 ] ] )
+Graph( Category := SimpleGraphs, Order := 20, Size := 36, Adjacencies := 
+[ [ 5, 9, 10 ], [ 12, 15, 16 ], [ 8, 13, 14, 16 ], [ 5, 6, 8, 20 ], 
+  [ 1, 4, 18, 20 ], [ 4, 7, 10, 16, 19 ], [ 6 ], [ 3, 4, 11, 13, 14, 16, 19 ],
+  [ 1, 13, 14, 15, 17 ], [ 1, 6, 20 ], [ 8, 14 ], [ 2, 20 ], [ 3, 8, 9, 14 ], 
+  [ 3, 8, 9, 11, 13, 16, 20 ], [ 2, 9, 18 ], [ 2, 3, 6, 8, 14 ], [ 9 ], 
+  [ 5, 15 ], [ 6, 8 ], [ 4, 5, 10, 12, 14 ] ] )
+   #+END_SRC
+   #+beamer: \pause\vspace*{-0.2cm}
+   #+BEGIN_SRC gap :exports code
 gap> Diameter(g);
-4
+5
+   #+END_SRC
+   #+beamer: \pause\vspace*{-0.2cm}
+   #+BEGIN_SRC gap :exports code
+gap> Girth(g);
+3
    #+END_SRC
 
 ** Dibujos con =YAGS=
@@ -290,15 +305,21 @@ gap> g:=WheelGraph(7);
 Graph( Category := SimpleGraphs, Order := 8, Size := 14, Adjacencies := 
 [ [ 2, 3, 4, 5, 6, 7, 8 ], [ 1, 3, 8 ], [ 1, 2, 4 ], [ 1, 3, 5 ], [ 1, 4, 6 ], 
   [ 1, 5, 7 ], [ 1, 6, 8 ], [ 1, 2, 7 ] ] )
+   #+END_SRC
+   #+beamer: \pause\vspace*{-0.2cm}
+   #+BEGIN_SRC gap :exports code
 gap> Draw(g);
    #+END_SRC
-
-*** 
-
+   #+beamer: \pause\vspace*{-0.2cm}
    #+BEGIN_SRC gap :exports code
 gap> g:=WheelGraph(15,4);;
+   #+END_SRC
+   #+beamer: \pause\vspace*{-0.2cm}
+   #+BEGIN_SRC gap :exports code
 gap> Draw(g);
    #+END_SRC
+
+* Ejemplos con YAGS
 
 ** Problema de Leo
 
@@ -328,17 +349,17 @@ CondicionLeo := function (g)
            CliqueNumber(ComplementGraph(g))<=2;
 end;
      #+END_SRC
-
-** Solución (continuación)
-
+     #+beamer: \pause
    - En una sesión interactiva con =YAGS=, obtenemos:
-     #+BEGIN_SRC gap :exports code
+     #+beamer: \footnotesize
+     #+BEGIN_SRC gaps :exports code
 gap> Read("leo.gap");
 gap> g8:=ConnectedGraphsOfGivenOrder(8);;
 gap> f:=Filtered(g8,CondicionLeo);;
 gap> List(f,x->Size(x));
 [ 16, 17, 18 ]
      #+END_SRC
+   #+beamer: \pause\normalsize
    - Por lo que la respuesta a la pregunta de Leonardo es 18.
 
 ** Operador de clanes
@@ -372,56 +393,37 @@ gap> List(f,x->Size(x));
 
 ** Código de clanes
 
-   #+BEGIN_SRC gap :exports code
-HasNoDominatedVertex := function (g)
-    return IsEmpty(DominatedVertices(g));
-end;
-
-IsNotCliqueHelly := function (g)
-    return not(IsCliqueHelly(g));
-end;
-
-IsNotEventuallyHelly := function (g)
-    local kcurrent, isit;
-    kcurrent := g;
-    isit := not(IsCliqueHelly(kcurrent));
-    while isit do
-        kcurrent := CliqueGraph(kcurrent,100);
-        if kcurrent = fail then 
-            return true;
-        else
-            kcurrent := CompletelyParedGraph(kcurrent);
-            isit := not(IsCliqueHelly(kcurrent));
-        fi;
-    od;
-    return isit;
-end;
-   #+END_SRC
+   #+INCLUDE: "./clanes.gap" src gap :lines "1-4"
+   #+beamer: \pause
+   #+INCLUDE: "./clanes.gap" src gap :lines "5-8"
+   #+beamer: \pause
+   #+INCLUDE: "./clanes.gap" src gap :lines "9-"
+   #+beamer: \pause
 
 ** Sesión interactiva. Gráficas de 6 vértices
 
-   #+BEGIN_SRC gap :exports code
+   #+latex: \footnotesize
+   #+BEGIN_SRC gaps :exports code
 gap> graphs:=ConnectedGraphsOfGivenOrder(6);;
 gap> Length(graphs);
 112
 gap> graphs:=Filtered(graphs,HasNoDominatedVertex);;
 gap> Length(graphs);
 9
-gap> graphs:=Filtered(graphs,IsCliqueHelly);;
-gap> Length(graphs);
-8
 gap> graphs:=Filtered(graphs,IsNotCliqueHelly);;
 gap> Length(graphs);
 1
 gap> Draw(graphs[1]);
    #+END_SRC
+   #+latex: \pause\normalsize
 
    La única gráfica de 6 vértices que obtenemos es la gráfica del
    octaedro, y es de hecho divergente (Neumann-Lara, 1975).
 
 ** Gráficas de 7 vértices
 
-   #+BEGIN_SRC gap :exports code
+   #+latex: \footnotesize
+   #+BEGIN_SRC gaps :exports code
 gap> graphs:=ConnectedGraphsOfGivenOrder(7);;
 gap> Length(graphs);
 853
@@ -435,6 +437,7 @@ gap> graphs:=Filtered(graphs,IsNotEventuallyHelly);;
 gap> Length(graphs);
 3
    #+END_SRC
+   #+latex: \pause\normalsize
 
    Las dos primeras gráficas tiene una /retracción/ al octaedro, 
    la tercera es la /suspensión/ del ciclo \(C_{5}\). Las tres son

@@ -21,4 +21,3 @@ IsNotEventuallyHelly := function (g)
     od;
     return isit;
 end;
-

@@ -1,19 +1,23 @@
-# Encontrar el primer grupo no soluble
+# Encontrar el primer grupo sin propiedad P
 
-solvable := true;
-i := 0;
+NextIndex := function(u)
+    local i,j;
+    i := u[1];
+    j := u[2];
+    if j < NrSmallGroups(i) then
+        return [i,j+1];
+    else
+        return [i+1,1];
+    fi;
+end;
 
-while solvable do
-    i := i+1;
-    j := 0;
-    while solvable and j < NrSmallGroups(i) do
-        j := j+1;
-        g := SmallGroup(i,j);
-        Print("Checking SmallGroup(",i,",",j,")\n");
-        solvable := IsSolvable(g);
-    od;
-od;
-
-Print("First non solvable group is SmallGroup(",i,",",j,")\n");
-
-
+FirstGroupWithout := function(P)
+    local a,g;
+    a := [1,0];
+    repeat
+        a := NextIndex(a);
+        g := SmallGroup(a);
+        Print("Checking SmallGroup(",a,")\n");
+    until not(P(g));
+    Print("First group without ",P, " is SmallGroup(",a,")\n");
+end;
