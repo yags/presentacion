@@ -12,7 +12,7 @@
 #+beamer_header: \languagepath{spanish}
 
 #+latex_header: \lstdefinelanguage{gap}{%
-#+latex_header:   morekeywords={gap>, return, local, not, true, fail, then, if, while, do, and, od, else, fi, end, function},
+#+latex_header:   morekeywords={gap>, return, local, not, true, fail, then, if, repeat, until, while, do, and, od, else, fi, end, function},
 #+latex_header:   sensitive=true,
 #+latex_header:   morestring=[b]",
 #+latex_header:   morecomment=[l]{\#},
