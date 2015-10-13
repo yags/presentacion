@@ -18,6 +18,7 @@
 #+latex_header:   morecomment=[l]{\#},
 #+latex_header: }
 #+latex_header: \lstdefinelanguage{dot}{}
+#+latex_header: \lstdefinelanguage{gaps}{}
 
 #+latex_header: \usepackage{tkz-berge}
 
@@ -68,23 +69,16 @@ file:gap.png
 [[file:gapgithub.png]]
 
 * Ejemplos
-
 ** Ejemplo de sesión interactiva
 
-*** Cálculos simples
-
-   #+BEGIN_SRC gap :exports code
+   #+latex: \small
+   #+BEGIN_SRC gaps :exports code
 gap> 2+2;
 4
 gap> 34^3;
 39304
 gap> 34^30;
 8797666833317830254826668219153233583932440576
-   #+END_SRC
-
-*** Cálculos con permutaciones
-   
-   #+BEGIN_SRC gap :exports code
 gap> (1,2,3)^2;
 (1,3,2)
 gap> (1,2)*(1,2,3);
@@ -454,6 +448,16 @@ gap> Length(graphs);
    [[https://github.com/yags/]]
    #+END_CENTER
 
+* COMMENT Código en presentaciones
+  - [X] Para resolver el problema se propone:
+    - [X] Usar el nombre =gaps= para el nuevo lenguaje. Configurar
+      =listings=.
+    - [X] Usar =org-latex-custom-lang-environments= para convertir
+      bloque del lenguaje =gaps= en =semiverbatim=
+    - [X] Usar algún filtro para añadir el código de los overlays cuando
+      se exporta a beamer.
+    - [X] Hay que arreglar cómo cambiar el tamaño de los =semiverbatim='s.
+
 * COMMENT Comentarios a YAGS
 
   - Quería definir una función =HasDominatedVertices=, pero no pude
@@ -480,4 +484,5 @@ los bloques con código fuente.
 # org-beamer-verbatim-elements: (src-block)
 # org-latex-image-default-width: "3cm"
 # org-hide-emphasis-markers: nil
+# org-latex-custom-lang-environments: ((gaps "semiverbatim"))
 # End:
