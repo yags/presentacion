@@ -449,7 +449,7 @@ gap> Length(graphs);
    #+END_CENTER
 
 * COMMENT Código en presentaciones
-  - [X] Para resolver el problema se propone:
+  - [-] Para resolver el problema se propone:
     - [X] Usar el nombre =gaps= para el nuevo lenguaje. Configurar
       =listings=.
     - [X] Usar =org-latex-custom-lang-environments= para convertir
@@ -457,6 +457,13 @@ gap> Length(graphs);
     - [X] Usar algún filtro para añadir el código de los overlays cuando
       se exporta a beamer.
     - [X] Hay que arreglar cómo cambiar el tamaño de los =semiverbatim='s.
+    - [ ] Ver por qué =gap>= no sale coloreado en el paquete listings.
+  - [ ] GAP
+    - [ ] Ver como imprimir una propiedad de mejor manera
+  - [ ] Clanes
+    - [ ] Dibujos de las gráficas que van quedando después de aplicar
+      los criterios.
+    - [ ] Ver si se pueden incluir las de 8.
 
 * COMMENT Comentarios a YAGS
 
