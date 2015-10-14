@@ -26,6 +26,7 @@
 
 #+beamer_header: \beamerdefaultoverlayspecification{<+->}
 #+beamer_header: \setbeamertemplate{items}[circle]
+#+beamer_header: \logo{\includegraphics[width=1.5cm]{yagslogo}}
 
 * Introducción
 
