@@ -346,12 +346,8 @@ gap> Draw(g);
 
    - Definimos una función para checar la condición deseada, y la
      guardamos en el archivo =leo.gap=.
-     #+BEGIN_SRC gap :exports code
-CondicionLeo := function (g)
-    return CliqueNumber(g)<=3 and
-           CliqueNumber(ComplementGraph(g))<=2;
-end;
-     #+END_SRC
+     #+beamer: \pause
+     #+include: "./leo.gap" src gap
      #+beamer: \pause
    - En una sesión interactiva con =YAGS=, obtenemos:
      #+beamer: \footnotesize
@@ -362,7 +358,7 @@ gap> f:=Filtered(g8,CondicionLeo);;
 gap> List(f,x->Size(x));
 [ 16, 17, 18 ]
      #+END_SRC
-   #+beamer: \pause\normalsize
+     #+beamer: \pause\normalsize
    - Por lo que la respuesta a la pregunta de Leonardo es 18.
 
 ** Operador de clanes
