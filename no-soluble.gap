@@ -19,5 +19,5 @@ FirstGroupWithout := function(P)
         g := SmallGroup(a);
         Print("Checking SmallGroup(",a,")\n");
     until not(P(g));
-    Print("First group without ",P, " is SmallGroup(",a,")\n");
+    Print("First group without ",P," is SmallGroup(",a,")\n");
 end;
