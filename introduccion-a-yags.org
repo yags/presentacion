@@ -1,4 +1,6 @@
-#+title: YAGS, un programa para la teoría de las gráficas
+#+MACRO: newline @@latex:\\@@ @@html:<br>@@
+
+#+title: YAGS, un programa para {{{newline}}} la teoría de las gráficas
 #+author: Rafael Villarroel Flores, UAEH
 #+date: 22 de octubre de 2015
 #+options: H:2
