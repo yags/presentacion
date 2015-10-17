@@ -245,14 +245,14 @@ graph G {
     #+header: :cache yes
     #+begin_src latex :results raw file
 \begin{tikzpicture}[scale=1.2]
-  \SetUpVertex[InnerSep=0pt,MinSize=0pt]
+  \SetUpVertex[InnerSep=2pt,MinSize=0pt]
   \SetUpEdge[lw=1.5pt]
-  \grEmptyCycle*[rotation=90,prefix=a,RA=2,Math]{12,34,15,23,45}
-  \grEmptyCycle*[rotation=90,prefix=b,RA=1,Math]{35,25,24,14,13}
+  \grEmptyCycle*[rotation=90,prefix=a,RA=2.5,Math]{12,34,15,23,45}
+  \grEmptyCycle*[rotation=90,prefix=b,RA=1.2,Math]{35,25,24,14,13}
   \EdgeInGraphLoop{a}{5}
   \EdgeInGraphMod{b}{5}{2}
   \EdgeIdentity{a}{b}{5}
-  \draw (0,-2) node [fill=orange!80!white,below]{Gráfica de Petersen};
+  \draw (0,-2.5) node [fill=orange!80!white,below]{Gráfica de Petersen};
 \end{tikzpicture}
     #+end_src
     
@@ -274,6 +274,7 @@ graph G {
 
 ** Primer sesión con =YAGS=
 
+   #+ATTR_LATEX: :options deletekeywords={and}
    #+BEGIN_SRC gap :exports code
 gap> LoadPackage("yags");
 Loading  YAGS 0.0.1  (Yet Another Graph System),
@@ -454,7 +455,7 @@ gap> Length(graphs);
    #+END_CENTER
 
 * COMMENT Código en presentaciones
-  - [-] Para resolver el problema se propone:
+  - [X] Para resolver el problema se propone:
     - [X] Usar el nombre =gaps= para el nuevo lenguaje. Configurar
       =listings=.
     - [X] Usar =org-latex-custom-lang-environments= para convertir
@@ -462,7 +463,7 @@ gap> Length(graphs);
     - [X] Usar algún filtro para añadir el código de los overlays cuando
       se exporta a beamer.
     - [X] Hay que arreglar cómo cambiar el tamaño de los =semiverbatim='s.
-    - [ ] Ver por qué =gap>= no sale coloreado en el paquete listings.
+    - [X] Ver por qué =gap>= no sale coloreado en el paquete listings.
   - [ ] GAP
     - [ ] Ver como imprimir una propiedad de mejor manera
   - [ ] Clanes
